@@ -1,0 +1,16 @@
+# Python
+src/inpainting/venv
+Results/3d/shreypot.ply
+Results/3d/shreymon.ply
+Results/3d/shreycoin20.ply
+Results/3d/shreycoin.ply
+Results/3d/sd_output14.ply
+Results/3d/sd_output2.ply
+Results/3d/Plate.ply
+Results/3d/oldplate.ply
+Results/3d/CodeXCups.ply
+Results/3d/Britishersinredfort.ply
+src/scraping/data/raw_images
+src/scraping/data/raw_text
+src/scraping/__pycache__
+Results

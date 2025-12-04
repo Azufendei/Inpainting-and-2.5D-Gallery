@@ -1,0 +1,3 @@
+# prompt = "Reconstruct the missing dome with sandstone texture and Mughal-style architecture details."
+# prompt = "Reconstruct the missing part of the ancient coin, restoring it realistically with consistent texture, metallic surface, engravings, and fine details. The design should seamlessly blend with the existing coin, maintaining symmetry, patina, and historical accuracy."
+# result = pipe(prompt=prompt, image=image, mask_image=mask, guidance_scale=7.5, num_inference_steps=40)
