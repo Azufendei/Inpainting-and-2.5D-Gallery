@@ -10,7 +10,7 @@ import wikipediaapi
 # config / constants
 # -----------------------
 API_URL = "https://commons.wikimedia.org/w/api.php"
-HEADERS = {"User-Agent": "HeritageDatasetBuilder/1.0 (contact: 03217711922_ds@vips.edu)"}
+HEADERS = {"User-Agent": "project name (contact: email)"}
 wiki = wikipediaapi.Wikipedia(language="en", user_agent=HEADERS["User-Agent"])
 
 BAD_EXTS = {".svg", ".webp", ".pdf", ".gif", ".tif", ".tiff", ".xcf"}
@@ -254,4 +254,4 @@ def process_site(site:str, img_limit:int=50):
 # run
 # -----------------------
 if __name__ == "__main__":
-    process_site("Hagia Sophia", img_limit=20)
+    process_site("Hagia Sophia", img_limit=20) # Alter according to the subject and total number if related images required
