@@ -254,4 +254,4 @@ def process_site(site:str, img_limit:int=50):
 # run
 # -----------------------
 if __name__ == "__main__":
-    process_site("Hagia Sophia", img_limit=20)
+    process_site("Christ Redeemer", img_limit=20)

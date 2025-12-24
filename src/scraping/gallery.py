@@ -150,18 +150,46 @@ class GalleryUI:
         self.canvas_img = None
 
     def show_item(self, i):
-        self.idx = max(0, min(i, len(self.items)-1))
+        # 1. Handle Empty Folder Case
+        if not self.items:
+            self.idx = 0
+            self.canvas.delete("all")
+            self.canvas.create_text(400, 300, text="No images found in folder.", fill="white", font=("Arial", 16))
+            self.thumb_label.config(image='', text="No Thumbnail")
+            self.meta_text.delete("1.0", tk.END)
+            self.meta_text.insert(tk.END, "Please check your image directory.")
+            return
+
+        # 2. Handle Index Bounds (Safe Clamping)
+        self.idx = max(0, min(i, len(self.items) - 1))
+        
+        # 3. Load Item
         it = self.items[self.idx]
-        img = Image.open(it["img_path"]).convert("RGB")
-        self.thumb = ImageTk.PhotoImage(ImageOps.fit(img,(320,240),Image.LANCZOS))
-        self.thumb_label.config(image=self.thumb)
-        self.meta_text.delete("1.0",tk.END)
-        self.meta_text.insert(tk.END, json.dumps(it.get("meta"), indent=2) if it.get("meta") else "No metadata available.")
-        w,h = img.size; scale = min(1000/w, 800/h,1.0)
-        disp = img.resize((int(w*scale), int(h*scale)), Image.LANCZOS)
-        self.display_img = ImageTk.PhotoImage(disp)
-        self.canvas.delete("all")
-        self.canvas_img = self.canvas.create_image(0,0,anchor="nw", image=self.display_img)
+        
+        try:
+            img = Image.open(it["img_path"]).convert("RGB")
+            
+            # Update Thumbnail
+            self.thumb = ImageTk.PhotoImage(ImageOps.fit(img, (320, 240), Image.LANCZOS))
+            self.thumb_label.config(image=self.thumb)
+            
+            # Update Metadata
+            self.meta_text.delete("1.0", tk.END)
+            meta_content = json.dumps(it.get("meta"), indent=2) if it.get("meta") else "No metadata available."
+            self.meta_text.insert(tk.END, f"File: {it['stem']}\n{meta_content}")
+            
+            # Update Main Canvas
+            w, h = img.size
+            scale = min(800/w, 600/h, 1.0) # Adjusted for 800x600 canvas
+            disp = img.resize((int(w * scale), int(h * scale)), Image.LANCZOS)
+            self.display_img = ImageTk.PhotoImage(disp)
+            
+            self.canvas.delete("all")
+            # Center the image on the canvas
+            self.canvas_img = self.canvas.create_image(400, 300, anchor="center", image=self.display_img)
+            
+        except Exception as e:
+            self.meta_text.insert(tk.END, f"\n\nError loading image: {e}")
 
     def prev(self): self.show_item(self.idx-1)
     def next(self): self.show_item(self.idx+1)
